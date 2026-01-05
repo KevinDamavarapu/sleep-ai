@@ -1,11 +1,14 @@
-export function classifyNight({ mood, thoughts }) {
-  // Explicit user choice always wins
+export function classifyNight({ mood, thoughts, memory }) {
+  if (memory && (!thoughts || thoughts.trim().length < 20)) {
+    return "wakeup";
+  }
+
   if (mood) return mood;
 
   if (!thoughts || thoughts.trim().length === 0) {
     return "heavy";
   }
-
+  
   const text = thoughts.toLowerCase();
 
   if (

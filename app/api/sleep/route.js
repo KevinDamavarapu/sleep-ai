@@ -21,7 +21,7 @@ export async function POST(req) {
     } = body;
 
     // 🧠 1. Perceive the night
-    const nightType = classifyNight({ mood, thoughts });
+    const nightType = classifyNight({ mood, thoughts, memory });
 
     // 🧠 2. Decide strategy
     const strategy = selectStrategy(nightType, memory);
