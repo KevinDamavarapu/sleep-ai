@@ -1,7 +1,11 @@
 export function updateMemory(prevMemory = {}, strategyUsed) {
+  const now = Date.now();
+
+  const safeMemory = prevMemory || {};
+
   return {
-    ...prevMemory,
+    createdAt : safeMemory.createdAt || now,
     preferredStrategy: strategyUsed,
-    lastUsedAt: Date.now(),
+    lastUsedAt: now,
   };
 }

@@ -12,9 +12,21 @@ export default function Home() {
 
   useEffect(() => {
   const savedMemory = localStorage.getItem("sleepAgentMemory");
-  if (savedMemory) {
-    setMemory(JSON.parse(savedMemory));
+  if (!savedMemory) return;
+
+  const parsed = JSON.parse(savedMemory);
+  const now = Date.now();
+
+  const SAME_NIGHT_WINDOW = 12 * 60 * 60 * 1000; // 12 hours
+  const MAX_MEMORY_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+  // Expire old memory completely
+  if (parsed.createdAt && now - parsed.createdAt > MAX_MEMORY_AGE) {
+    localStorage.removeItem("sleepAgentMemory");
+    return;
   }
+
+  setMemory(parsed);
   }, []);
 
 
